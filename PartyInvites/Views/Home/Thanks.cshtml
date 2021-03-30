@@ -19,6 +19,25 @@
     </style>
 </head>
 <body>
+    @{
+        try
+        {
+            WebMail.SmtpServer = "smtp.example.com";
+            WebMail.SmtpPort = 587;
+            WebMail.EnableSsl = true;
+            WebMail.UserName = "mySmtpUsername";
+            WebMail.Password = "mySmtpPassword";
+            WebMail.From = "myemai@example.com";
+
+            WebMail.Send("myemail@example.com", "RSVP Приглашение",
+                Model.Name + ((Model.WillAttend ?? false) ? " " : "не") + "придет");
+
+        }
+        catch (Exception)
+        {
+            @:<b>К сожалению при отправке письма возникла ошибка.</b>
+        }
+    }
     <div class="text-center">
         <h1>Спасибо, @Model.Name!</h1>
         <div class="lead">
