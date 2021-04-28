@@ -21,7 +21,7 @@ ___
 - ASP.NET MVC 5
 - JavaScript
 - JQuery
-- Bootstrap
+- C#
 
 ### Presetting
 ___
