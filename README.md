@@ -1,3 +1,8 @@
+[![GitHub forks](https://img.shields.io/github/forks/Allseeingeye99/PartyInvites?style=plastic)](https://github.com/Allseeingeye99/PartyInvites/network)
+[![GitHub issues](https://img.shields.io/github/issues/Allseeingeye99/PartyInvites?style=plastic)](https://github.com/Allseeingeye99/PartyInvites/issues)
+[![GitHub stars](https://img.shields.io/github/stars/Allseeingeye99/PartyInvites?style=plastic)](https://github.com/Allseeingeye99/PartyInvites/stargazers)
+[![GitHub license](https://img.shields.io/github/license/Allseeingeye99/PartyInvites?style=plastic)](https://github.com/Allseeingeye99/PartyInvites)
+
 
 
 # Party invitation
