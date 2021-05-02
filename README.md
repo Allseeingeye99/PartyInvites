@@ -1,7 +1,7 @@
-[![GitHub forks](https://img.shields.io/github/forks/Allseeingeye99/PartyInvites?style=plastic)](https://github.com/Allseeingeye99/PartyInvites/network)
-[![GitHub issues](https://img.shields.io/github/issues/Allseeingeye99/PartyInvites?style=plastic)](https://github.com/Allseeingeye99/PartyInvites/issues)
-[![GitHub stars](https://img.shields.io/github/stars/Allseeingeye99/PartyInvites?style=plastic)](https://github.com/Allseeingeye99/PartyInvites/stargazers)
-[![GitHub license](https://img.shields.io/github/license/Allseeingeye99/PartyInvites?style=plastic)](https://github.com/Allseeingeye99/PartyInvites)
+
+![build](https://img.shields.io/badge/build-passing-1CB265?style=plastic&logo=appveyor)
+![GitHub](https://img.shields.io/badge/.Net-passing-318CE7?style=plastic&logo=github)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-3.0.0-9457EB?style=plastic&logo=Bootstrap)
 
 
 
@@ -21,7 +21,32 @@ ___
 - ASP.NET MVC 5
 - JavaScript
 - JQuery
-- Bootstrap
+- Bootstrap 
+___
+###Adding a validation check
+In an ***MVC*** application, validation is typically applied in the domain model, not in the user interface. This means that you can define in one place the desired validation criteria that come into play wherever the model class is used.
+using System.ComponentModel.DataAnnotations;
+
+    namespace PartyInvites.Models
+      {
+     public class GuestResponse
+      {
+        [Required(ErrorMessage="Пожалуйста, введите свое имя")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage="Пожалуйста, введите email")]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage="Вы ввели некорректный email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Пожалуйста, введите телефон")]
+        public string Phone { get; set; }
+
+        [Required(ErrorMessage = "Пожалуйста, укажите, примите ли участие в вечеринке")]
+        public bool? WillAttend { get; set; }
+      }
+     }
+
+The ***ASP.NET MVC*** framework supports declarative validation rules defined using attributes from the ***System.ComponentModel***.***DataAnnotations namespace***, which means that validation constraints are expressed using standard ***C #*** attributes. The example below shows how to apply these attributes to the ***GuestResponse*** model class:
 
 ### Presetting
 ___
@@ -38,63 +63,44 @@ Use of four fixed assets:
 ___
 NuGet [link](https://www.nuget.org/)
 
+The Install-Package command tells NuGet to download the package along with its dependencies and then add it all to the project. The package you need is called bootstrap. Package names can either be searched on the NuGet website (http://www.nuget.org) or you can use the NuGet UI services in Visual Studio (select Tools -> Library Package Manager -> Manage NuGet Packages for Solution.
+
 ### Styling the RsvpForm View
 ____
 The Bootstrap library defines classes that can be used to style forms.
 The Bootstrap classes in this example create a header bar to give the layout structure. To style the form, use the form-group class, which styles the element that contains the label and the associated input or select element.
 The following shows how these classes were applied:
 
-    @model PartyInvites.Models.GuestResponse
+ ### Sending RSVP responses by email to the party organizer
+ This could be accomplished by adding an action method to create and send a message using the email classes available in the ***.NET Framework*** — an approach that aligns best with the ***MVC*** pattern.
 
-    @{
-    Layout = null;
-    }
+However, we intend to use the ***WebMail*** helper class instead. It is not part of the ***MVC framework***, but it allows you to complete the example without going into the nuances of configuring the means for sending email. We want the email to be sent when rendering the ***Thanks*** view. The required changes are shown in the example below:
+   
 
-    <!DOCTYPE html>
+            WebMail.Send("myemail@example.com", "RSVP Приглашение",
+                Model.Name + ((Model.WillAttend ?? false) ? " " : "не") + "придет");
 
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>RsvpForm</title>
-        <link rel="stylesheet" type="text/css" href="~/Content/Styles.css" />
-        <link href="~/Content/bootstrap.css" rel="stylesheet" />
-        <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
-    </head>
-    <body>
-    <div class="panel-success">
-        <div class="panel-heading text-center">
-            <h4>Form RSVP</h4>
-        </div>
-        <div class="panel-body">
-            @using (Html.BeginForm())
-            {
-                @Html.ValidationSummary()
-                <div class="form-group">
-                    <label>Your name:</label>
-                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <label>Your email:</label>
-                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <label>Your phone number:</label>
-                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <label>Will you come?</label>
-                        @Html.DropDownListFor(x => x.WillAttend, new[] {
-                            new SelectListItem() { Text = "Yes of course I will", Value = Boolean.TrueString},
-                            new SelectListItem() { Text = "No i can't come", Value = Boolean.FalseString}
-                        }, "Select option", new { @class = "form-control" })
-                </div>
-                <div class="text-center">
-                    <input type="submit" value="Submit Form RSVP" class="btn btn-success" />
-                </div>
             }
-        </div>
-    </div>
-    </body>
-    </html>
-
+        catch (Exception)
+           {
+            @:<b>К сожалению при отправке письма возникла ошибка.</b>
+        }
+    }
+    <div class="text-center">
+        <h1>Спасибо, @Model.Name!</h1>
+        <div class="lead">
+            @if (Model.WillAttend == true)
+            {
+                @:Здорово что вы придете, напитки уже в холодильнике ;)
+            }
+            else
+            {
+                @:Жаль что вы не придете, но спасибо что дали об этом знать.
+            }
 ___
+
+         
+         
+The ***WebMail*** helper class was used because it allows you to demonstrate how to send an email with minimal effort. However, it is usually preferable to put this functionality in an action method.
+
+We've added a ***Razor*** expression that uses the ***WebMail*** helper class to configure our mail server settings, including the server name, required secure connections ***(SSL)***, and account information. Once all of these details are configured, an email is sent using the ***WebMail.Send ()*** method.
