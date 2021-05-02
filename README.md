@@ -1,8 +1,7 @@
 ![license](https://img.shields.io/badge/license-Mit-green?style=plastic)
 ![build](https://img.shields.io/badge/build-passing-1CB265?style=plastic&logo=appveyor)
 ![GitHub](https://img.shields.io/badge/.Net-passing-318CE7?style=plastic&logo=github)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-3.0.0-9457EB?style=plastic&logo=Bootstrap)
-
+![Bootstrap](https://img.shields.io/badge/Bootstrap-3.4.1-9457EB?style=plastic&logo=Bootstrap)
 
 
 # Party invitation
