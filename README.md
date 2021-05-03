@@ -22,7 +22,7 @@ ___
 - JQuery
 - Bootstrap 
 ___
-###Adding a validation check
+### Adding a validation check
 In an ***MVC*** application, validation is typically applied in the domain model, not in the user interface. This means that you can define in one place the desired validation criteria that come into play wherever the model class is used.
 using System.ComponentModel.DataAnnotations;
 
