@@ -4,6 +4,7 @@
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-3.4.1-9457EB?style=plastic&logo=Bootstrap)
 
 
+
 # Party invitation
 ___
 
@@ -25,27 +26,29 @@ ___
 ### Adding a validation check
 In an ***MVC*** application, validation is typically applied in the domain model, not in the user interface. This means that you can define in one place the desired validation criteria that come into play wherever the model class is used.
 using System.ComponentModel.DataAnnotations;
-
-    namespace PartyInvites.Models
-      {
-     public class GuestResponse
-      {
-        [Required(ErrorMessage="Пожалуйста, введите свое имя")]
-        public string Name { get; set; }
-
-        [Required(ErrorMessage="Пожалуйста, введите email")]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage="Вы ввели некорректный email")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Пожалуйста, введите телефон")]
-        public string Phone { get; set; }
-
-        [Required(ErrorMessage = "Пожалуйста, укажите, примите ли участие в вечеринке")]
-        public bool? WillAttend { get; set; }
-      }
-     }
-
 The ***ASP.NET MVC*** framework supports declarative validation rules defined using attributes from the ***System.ComponentModel***.***DataAnnotations namespace***, which means that validation constraints are expressed using standard ***C #*** attributes. The example below shows how to apply these attributes to the ***GuestResponse*** model class:
+
+       using System.ComponentModel.DataAnnotations;
+       namespace PartyInvites.Models
+       {
+         public class GuestResponse
+        {
+           [Required(ErrorMessage="Пожалуйста, введите свое имя")]
+           public string Name { get; set; }
+
+           [Required(ErrorMessage="Пожалуйста, введите email")]
+           [RegularExpression(".+\\@.+\\..+", ErrorMessage="Вы ввели некорректный email")]
+            public string Email { get; set; }
+
+           [Required(ErrorMessage = "Пожалуйста, введите телефон")]
+            public string Phone { get; set; }
+
+           Required(ErrorMessage = "Пожалуйста, укажите, примите ли участие в вечеринке")]
+            public bool? WillAttend { get; set; }
+         }
+       }
+
+
 
 ### Presetting
 ___
